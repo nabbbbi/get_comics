@@ -21,7 +21,27 @@ else
     exit 1
 fi
 
-value=100
+# checking number of issues
+checkurl=$url/
+II=1
+MAX=400
+
+while test $II -le $MAX; do
+    if test $II -le 9; then
+	append=0$II.jpg
+    else
+	append=$II.jpg
+    fi
+    if curl --output /dev/null --silent --head --fail "$checkurl$append"; then
+	II=$((II+1))
+    else
+	I=$((II-1))
+	value=$II
+	break
+    fi
+done
+
+# main program
 I=1
 while test $I -le $value; do
     if test "$I" -le "9"; then
